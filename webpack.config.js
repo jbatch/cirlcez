@@ -9,6 +9,7 @@ const config = {
   context: path.resolve(__dirname, 'src/client/'),
   entry: './index.ts',
   output: {
+    filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist', 'client'),
   },
   devServer: {
