@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf -dist",
+    "clean": "rm -rf dist",
+    "build": "yarn clean && yarn build-client && yarn build-server",
     "build-client": "webpack --mode=production",
     "build-server": "tsc -p server.tsconfig.json",
     "dev-client": "webpack-dev-server",

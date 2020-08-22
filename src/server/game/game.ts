@@ -17,6 +17,8 @@ export default class Game {
     this.lastUpdatedTime = Date.now();
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / FRAMES_PER_SECOND);
+
+    // Add bot player
   }
 
   addPlayer(socket: SafeSocket, username: string) {
@@ -52,8 +54,8 @@ export default class Game {
     this.applyCollisions(Object.values(this.players));
 
     // Remove all players that died and send updated state to all players
-    Object.entries(this.sockets).forEach(([id, socket]) => {
-      const player = this.players[id];
+    Object.entries(this.players).forEach(([id, player]) => {
+      const socket = this.sockets[id];
       if (!player.alive) {
         if (socket) {
           socket.safeEmit('game-over', {});
