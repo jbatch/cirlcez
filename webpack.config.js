@@ -7,7 +7,7 @@ const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 const config = {
   context: path.resolve(__dirname, 'src/client/'),
-  entry: './index.tsx',
+  entry: './index.ts',
   output: {
     path: path.resolve(__dirname, 'dist', 'client'),
   },
@@ -25,10 +25,10 @@ const config = {
     ]
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.ts', '.js'],
   },
   module: {
-    rules: [{ test: /\.tsx?$/, loader: 'ts-loader', exclude: '/node_modules/' }],
+    rules: [{ test: /\.ts$/, loader: 'ts-loader', exclude: '/node_modules/' }],
   },
   plugins: [
     new webpack.EnvironmentPlugin({
@@ -36,10 +36,10 @@ const config = {
       PUBLIC_URL: 'http://localhost:8000',
     }),
     new CopyPlugin({
-      patterns: [{ from: './public', to: './' }],
+      patterns: [{ from: './public', to: './', globOptions: { ignore: ['*.html']} }],
     }),
     new HtmlWebpackPlugin({
-      template: './public/index.ejs',
+      template: './public/index.html',
       filename: './index.html',
       PUBLIC_URL: PUBLIC_URL,
     }),
