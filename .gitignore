@@ -1,0 +1,7 @@
+dist
+node_modules
+.env
+docker/mysql
+docker/redis
+yarn-error.log
+.DS_Store
