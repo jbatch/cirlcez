@@ -1,3 +1,4 @@
+/* html classes */
 * {
   box-sizing: border-box;
 }
@@ -9,17 +10,34 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+/* Specific classes */
+
+#game-canvas {
+  border: 1px solid red;
+}
+
+main {
+  flex: 1 0 auto;
+  display: flex;
+  align-items: center;
 }
 
 #start-game-modal {
-  border: 1px solid red;
-  border-radius: 4px;
-  padding: 16px;
-  min-width: 400px;
+  border: #eee;
+  background-color: #fdfdfd;
+  border-radius: 8px;
+  padding: 32px;
+  /* min-width: 400px; */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+
+/* Utility classes */
 
 .mt-2 {
   margin-top: 16px;
