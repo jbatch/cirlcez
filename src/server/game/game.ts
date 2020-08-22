@@ -37,9 +37,10 @@ export default class Game {
     delete this.players[socket.id];
   }
 
-  handleInput(socket: SafeSocket, { dir }: InputMessage) {
+  handleInput(socket: SafeSocket, { dir, throttle = 1 }: InputMessage) {
     if (this.players[socket.id]) {
       this.players[socket.id].setDirection(dir);
+      this.players[socket.id].setThrottle(throttle);
     }
   }
 

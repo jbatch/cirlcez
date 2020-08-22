@@ -8,6 +8,7 @@ type GameStateMessage = {
 };
 type InputMessage = {
   dir: number;
+  throttle?: number;
 };
 type GameOverMessage = {};
 
