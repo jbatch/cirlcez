@@ -6,6 +6,7 @@ const FPS = 60;
 let gameCanvasEl: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 let renderInterval: ReturnType<typeof setInterval>;
+let lastRenderTime: number;
 
 const debugParams = getDebugParams();
 
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ctx = gameCanvasEl.getContext('2d');
   setCanvasSize();
   startRenderInterval();
+  lastRenderTime = Date.now();
 });
 
 window.addEventListener('resize', debounce(40, setCanvasSize));
@@ -27,8 +29,10 @@ function renderAll() {
   others.forEach((other: PlayerState) => renderPlayer(other));
   if (debugParams.debug) {
     // Render FPS counter
-    renderFpsCounter(serverFps);
+    const clientFps = 1 / ((Date.now() - lastRenderTime) / 1000);
+    renderFpsCounter(serverFps, clientFps);
   }
+  lastRenderTime = Date.now();
 }
 
 function renderPlayer(playerState: PlayerState) {
@@ -60,11 +64,12 @@ function setCanvasSize() {
   renderAll();
 }
 
-function renderFpsCounter(serverFps: number) {
+function renderFpsCounter(serverFps: number, clientFps: number) {
   ctx.fillStyle = '#ff0000';
   ctx.font = '48px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('Server FPS: ' + serverFps.toFixed(0), gameCanvasEl.width * 0.9, gameCanvasEl.height * 0.05);
+  ctx.textAlign = 'right';
+  ctx.fillText('Server FPS: ' + serverFps.toFixed(0), gameCanvasEl.width * 0.95, gameCanvasEl.height * 0.05);
+  ctx.fillText('Client FPS: ' + clientFps.toFixed(0), gameCanvasEl.width * 0.95, gameCanvasEl.height * 0.1);
 }
 
 export function startRenderInterval() {
