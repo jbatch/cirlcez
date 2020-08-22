@@ -18,6 +18,19 @@ function initialiseSocket() {
 
   return socket;
 }
+/*function initialiseSocket() {
+  return new Promise((resolve, reject) => {
+    try {
+      socket = socketIO.connect(`ws://${window.location.host}`);
+      socket.on('connect', () => {
+        console.log('Connected to server');
+        resolve(socket);
+      });
+    } catch (err) {
+      reject(err);
+    }
+  })
+} */
 
 function safeEmit<Event extends keyof SocketEvents>(
   event: Event,
