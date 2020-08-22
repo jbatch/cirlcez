@@ -1,5 +1,5 @@
 {
-  "name": "first-io-game",
+  "name": "cirlcez",
   "license": "MIT",
   "scripts": {
     "build": "webpack --config ./webpack.prod.js --mode production",
