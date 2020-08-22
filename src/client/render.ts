@@ -20,7 +20,6 @@ function renderAll() {
   ctx.clearRect(0, 0, gameCanvasEl.width, gameCanvasEl.height);
   ctx.strokeStyle = '#ff0000';
 
-  ctx.fillRect(10, 10, 50, 50);
   renderPlayer(me);
   others.forEach((other: PlayerState) => renderPlayer(other));
 }
@@ -32,9 +31,9 @@ function renderPlayer(playerState: PlayerState) {
   // draw filled circle
   ctx.beginPath();
   ctx.fillStyle = playerState.color;
-  ctx.arc(x - playerState.size, y - playerState.size, playerState.size, 0, Math.PI * 2);
-  // ctx.fillRect(x, y, 50, 50);
+  ctx.arc(x, y, playerState.size, 0, Math.PI * 2);
   ctx.fill();
+
   // render player name
   ctx.fillStyle = '#ffffff';
   ctx.font = '48px sans-serif';

@@ -80,7 +80,6 @@ export default class Game {
         }
         if (p1.distanceTo(p2) < p1.size + p2.size) {
           // Collision occured.
-          console.log('Collusion occured');
           if (p1.size > p2.size) {
             p1.setSize(p1.size + 10);
             p2.setAlive(false);

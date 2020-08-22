@@ -36,14 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
   safeOn('game-state', (gameState) => {
     const { t, me, others } = gameState;
     processGameUpdate(gameState);
-    console.log('OTHERS', others.length);
-    console.log('ME', me.x, me.y, me);
   });
   safeOn('game-over', () => {
     modalTitleEl.innerText = 'Game Over!';
     startGameModal.classList.remove('hidden');
-
-    console.log('Game over!');
   });
 });
 
