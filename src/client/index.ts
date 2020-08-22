@@ -1,6 +1,8 @@
 import { initialiseSocket, safeOn, safeEmit } from './sockets';
 import { startRenderInterval, stopRenderInterval } from './render';
 import { startCapturingInput, stopCapturingInput } from './input';
+import { joinGame } from './network';
+import { setPlayerState } from './game-state';
 
 const socket = initialiseSocket();
 let playerNameEl: HTMLInputElement;
@@ -13,15 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
   startGameButtonEl = document.getElementById('play-button') as HTMLButtonElement;
 
   // todo: remove
-  safeEmit('join', { username: 'Luke' });
+  joinGame('Luke');
   startCapturingInput();
+  startRenderInterval();
 
   socket.on('connect', () => {
     addEventHandlers();
   });
   safeOn('game-state', (gameState) => {
     const { t, me } = gameState;
-    console.log(t, me);
+    setPlayerState(me);
+    console.log(me);
   });
 });
 
@@ -31,7 +35,7 @@ function onPlayButtonClick() {
     return alert('Player name is required');
   }
   console.log('Joining');
-  safeEmit('join', { username: playerName });
+  joinGame(playerName);
 }
 
 function addEventHandlers() {

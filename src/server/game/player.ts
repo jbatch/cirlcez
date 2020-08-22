@@ -1,12 +1,12 @@
-import Entity from './entity'
+import Entity from './entity';
 
-export default class Player  extends Entity {
+export default class Player extends Entity {
   username: string;
   color: string;
   size: number;
   alive: boolean;
   constructor(id: string, username: string, color: string, x: number, y: number, dir: number) {
-    super(id, x, y, dir, 10);
+    super(id, x, y, dir, 250);
     this.username = username;
     this.color = color;
     this.alive = true;
@@ -26,10 +26,9 @@ export default class Player  extends Entity {
 
   serializeForUpdate(): PlayerState {
     return {
-      ...(super.serializeForUpdate()),
+      ...super.serializeForUpdate(),
       username: this.username,
       color: this.color,
     };
   }
-  
 }

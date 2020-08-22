@@ -1,7 +1,7 @@
 import Player from './player';
 import { SafeSocket } from '../sockets/safe-socket';
 
-const FRAMES_PER_SECOND = 1; // 60;
+const FRAMES_PER_SECOND = 60; // 60;
 
 export default class Game {
   sockets: { [id: string]: SafeSocket };
