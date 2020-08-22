@@ -7,7 +7,6 @@
     "clean": "rm -rf -dist",
     "build-client": "webpack --mode=production",
     "build-server": "tsc -p server.tsconfig.json",
-    "dev": "webpack-dev-server",
     "dev-client": "webpack-dev-server",
     "dev-server": "ts-node-dev --project server.tsconfig.json --watch 'src/server/**/*.ts' src/server/index.ts | ./node_modules/.bin/pino-pretty",
     "lint": "yarn eslint 'src/*.{js,ts,tsx}' --quiet --fix",

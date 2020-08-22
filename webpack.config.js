@@ -36,7 +36,7 @@ const config = {
       PUBLIC_URL: 'http://localhost:8000',
     }),
     new CopyPlugin({
-      patterns: [{ from: './public', to: './', globOptions: { ignore: ['*.html']} }],
+      patterns: [{ from: './public', to: './assets', globOptions: { ignore: ['*.html']} }],
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',

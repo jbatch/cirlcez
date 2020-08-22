@@ -7,3 +7,5 @@
 # Development
 
 # Deployment
+
+Favicons from [Favicon.io](https://favicon.io/)
