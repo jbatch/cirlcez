@@ -12,12 +12,12 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overscroll-behavior-y: contain;
 }
 
 /* Specific classes */
 
 #game-canvas {
-  border: 4px solid red;
   position: absolute;
   top: 0;
   left: 0;

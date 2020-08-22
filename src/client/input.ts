@@ -5,6 +5,7 @@ function onMouseMove(e: MouseEvent) {
   handleInput(e);
 }
 function onTouchMove(e: TouchEvent) {
+  e.preventDefault();
   handleInput(e.touches[0]);
 }
 
