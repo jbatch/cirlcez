@@ -1,10 +1,13 @@
 import { debounce } from 'throttle-debounce';
 import { getCurrentState } from './game-state';
+import { getDebugParams } from './debug';
 
 const FPS = 60;
 let gameCanvasEl: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 let renderInterval: ReturnType<typeof setInterval>;
+
+const debugParams = getDebugParams();
 
 document.addEventListener('DOMContentLoaded', () => {
   gameCanvasEl = document.getElementById('game-canvas') as HTMLCanvasElement;
@@ -16,12 +19,16 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('resize', debounce(40, setCanvasSize));
 
 function renderAll() {
-  const { me, others } = getCurrentState();
+  const { me, others, serverFps } = getCurrentState();
   ctx.clearRect(0, 0, gameCanvasEl.width, gameCanvasEl.height);
   ctx.strokeStyle = '#ff0000';
 
   renderPlayer(me);
   others.forEach((other: PlayerState) => renderPlayer(other));
+  if (debugParams.debug) {
+    // Render FPS counter
+    renderFpsCounter(serverFps);
+  }
 }
 
 function renderPlayer(playerState: PlayerState) {
@@ -51,6 +58,13 @@ function setCanvasSize() {
   gameCanvasEl.width = innerWidth;
   gameCanvasEl.height = innerHeight;
   renderAll();
+}
+
+function renderFpsCounter(serverFps: number) {
+  ctx.fillStyle = '#ff0000';
+  ctx.font = '48px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Server FPS: ' + serverFps.toFixed(0), gameCanvasEl.width * 0.9, gameCanvasEl.height * 0.05);
 }
 
 export function startRenderInterval() {

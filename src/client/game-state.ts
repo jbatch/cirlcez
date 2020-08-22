@@ -56,6 +56,7 @@ export function getCurrentState() {
     return {
       me: interpolateObject(baseUpdate.me, next.me, ratio),
       others: interpolateObjectArray(baseUpdate.others, next.others, ratio),
+      serverFps: baseUpdate.serverFps,
     };
   }
 }

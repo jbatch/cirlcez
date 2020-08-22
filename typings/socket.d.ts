@@ -1,14 +1,15 @@
-type JoinMessage = {username: string};
-type DisconnectMessage = {}
+type JoinMessage = { username: string };
+type DisconnectMessage = {};
 type GameStateMessage = {
-  t: number,
+  t: number;
+  serverFps: number;
   me: PlayerState;
   others: Array<PlayerState>;
-}
+};
 type InputMessage = {
   dir: number;
-}
-type GameOverMessage = {}
+};
+type GameOverMessage = {};
 
 type SocketEvents = {
   join: JoinMessage;
@@ -16,4 +17,4 @@ type SocketEvents = {
   'game-state': GameStateMessage;
   input: InputMessage;
   'game-over': GameOverMessage;
-}
+};

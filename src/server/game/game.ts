@@ -38,9 +38,9 @@ export default class Game {
 
   update() {
     // Calculate time elapsed
-    const lastUpdate = this.lastUpdatedTime;
     const now = Date.now();
     const dt = (now - this.lastUpdatedTime) / 1000;
+    const lastUpdate = this.lastUpdatedTime;
     this.lastUpdatedTime = now;
 
     // Update all playerz
@@ -64,6 +64,7 @@ export default class Game {
       if (socket) {
         socket.safeEmit('game-state', {
           t: Date.now(),
+          serverFps: 1 / dt,
           me: player.serializeForUpdate(),
           others: Object.values(this.players)
             .filter((p) => p.id != player.id)
@@ -71,8 +72,6 @@ export default class Game {
         });
       }
     });
-    const timeToProcessUpdate = (this.lastUpdatedTime - lastUpdate) / 1000;
-    logger.info('Server FPS: ' + 1 / timeToProcessUpdate);
   }
 
   applyCollisions(players: Array<Player>) {
