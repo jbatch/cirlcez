@@ -1,4 +1,5 @@
 import Entity from './entity';
+import Constants from '../../shared/constants';
 
 export default class Player extends Entity {
   username: string;
@@ -15,6 +16,10 @@ export default class Player extends Entity {
 
   update(dt: number) {
     super.update(dt);
+
+    // Make sure the player stays in bounds
+    this.x = Math.max(0 + this.size, Math.min(Constants.MAP_SIZE - this.size, this.x));
+    this.y = Math.max(0 + this.size, Math.min(Constants.MAP_SIZE - this.size, this.y));
   }
 
   setSize(size: number) {

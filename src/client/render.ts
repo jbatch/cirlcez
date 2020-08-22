@@ -1,6 +1,7 @@
 import { debounce } from 'throttle-debounce';
 import { getCurrentState } from './game-state';
 import { getDebugParams } from './debug';
+import Constants from '../shared/constants';
 
 const FPS = 60;
 let gameCanvasEl: HTMLCanvasElement;
@@ -31,6 +32,8 @@ function renderAll() {
     // Render FPS counter
     const clientFps = 1 / ((Date.now() - lastRenderTime) / 1000);
     renderFpsCounter(serverFps, clientFps);
+    renderPlayerCount(others.length + 1);
+    renderMapEdge();
   }
   lastRenderTime = Date.now();
 }
@@ -70,6 +73,18 @@ function renderFpsCounter(serverFps: number, clientFps: number) {
   ctx.textAlign = 'right';
   ctx.fillText('Server FPS: ' + serverFps.toFixed(0), gameCanvasEl.width * 0.95, gameCanvasEl.height * 0.05);
   ctx.fillText('Client FPS: ' + clientFps.toFixed(0), gameCanvasEl.width * 0.95, gameCanvasEl.height * 0.1);
+}
+
+function renderPlayerCount(playerCount: number) {
+  ctx.fillStyle = '#ff0000';
+  ctx.font = '48px sans-serif';
+  ctx.textAlign = 'right';
+  ctx.fillText('Players: ' + playerCount, gameCanvasEl.width * 0.95, gameCanvasEl.height * 0.15);
+}
+
+function renderMapEdge() {
+  ctx.fillStyle = '#aa00aa';
+  ctx.strokeRect(0, 0, Constants.MAP_SIZE, Constants.MAP_SIZE);
 }
 
 export function startRenderInterval() {
