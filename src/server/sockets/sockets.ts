@@ -11,6 +11,7 @@ export function configureSockets(appServer: http.Server, game: Game) {
   const server = socketIo(appServer);
 
   server.on('connect', (client: socketIo.Socket & { username: string }) => {
+    logger.info('Client connected');
     const safeSocket = getSafeSocket(client, server);
 
     // Setup event listeners for client

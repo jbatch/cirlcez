@@ -1,4 +1,6 @@
-export default class Player {
+import Entity from './entity'
+
+export default class Player  extends Entity {
   id: string;
   username: string;
   color: string;
@@ -6,12 +8,13 @@ export default class Player {
   y: number;
   dir: number;
   constructor(id: string, username: string, color: string, x: number, y: number, dir: number) {
-    this.id = id;
+    super(id, x, y, dir, 10);
     this.username = username;
     this.color = color;
-    this.x = x;
-    this.y = y;
-    this.dir = dir;
+  }
+
+  update(dt: number) {
+    super.update(dt);
   }
 
   setDirection(dir: number) {
@@ -20,11 +23,9 @@ export default class Player {
 
   serializeForUpdate(): PlayerState {
     return {
-      id: this.id,
+      ...(super.serializeForUpdate()),
       username: this.username,
       color: this.color,
-      x: this.x,
-      y: this.y,
     };
   }
   

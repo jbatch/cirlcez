@@ -33,6 +33,15 @@ export default class Game {
   }
 
   update() {
+     // Calculate time elapsed
+     const now = Date.now();
+     const dt = (now - this.lastUpdatedTime) / 1000;
+     this.lastUpdatedTime = now;
+
+    Object.values(this.players).forEach(player => {
+      player.update(dt);
+    })
+
     // Send updated state to all players
     Object.entries(this.sockets).forEach(([id, socket]) => {
       const player = this.players[id];

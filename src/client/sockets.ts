@@ -14,6 +14,7 @@ function initialiseSocket() {
   socket = socketIO.connect(`ws://${window.location.host}`);
   socket.on('connect', () => {
     console.log('Connected to server')
+    socket.on('game-state', (state: any) => console.log('Got game state', JSON.stringify(state)))
   });
 
   return socket;
