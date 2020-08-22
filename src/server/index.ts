@@ -25,6 +25,7 @@ async function main() {
 
   // Create single instance of game for all players to use
   const game = new Game();
+
   // Initalize socketIO
   configureSockets(server, game);
 

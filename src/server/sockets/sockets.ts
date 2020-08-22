@@ -2,57 +2,37 @@ import socketIo from 'socket.io';
 import http from 'http';
 import pino from 'pino';
 import Game from '../game/game';
+import { Socket } from 'socket.io';
+import { getSafeSocket } from './safe-socket';
 
 const logger = pino();
 
 export function configureSockets(appServer: http.Server, game: Game) {
   const server = socketIo(appServer);
 
-  server.on('connect', (client: socketIo.Socket & {username: string}) => {
-    const { safeEmit, safeOn, safeRoomEmit } = getSafeSocketFunctions(
-      client,
-      server
-    );
+  server.on('connect', (client: socketIo.Socket & { username: string }) => {
+    const safeSocket = getSafeSocket(client, server);
 
     // Setup event listeners for client
-    safeOn('join', handleJoin);
-    safeOn('disconnect', handleDisconnect);
+    safeSocket.safeOn('join', handleJoin);
+    safeSocket.safeOn('disconnect', handleDisconnect);
+    safeSocket.safeOn('input', handleInput);
 
-    async function handleJoin({ username }: JoinMessage) {
+    function handleJoin({ username }: JoinMessage) {
       logger.info(`${client.id} (${username}) joining game`);
       client.username = username;
       // Put player in game.
+      game.addPlayer(safeSocket, username);
     }
-    
-    async function handleDisconnect() {
+
+    function handleDisconnect() {
       logger.info(`${client.id} (${client.username || 'unknown'}) disconnected`);
-      // remove player from game.
+      // Remove player from game.
+      game.removePlayer(safeSocket);
+    }
+
+    function handleInput(input: InputMessage) {
+      game.handleInput(safeSocket, input);
     }
   });
-}
-
-function getSafeSocketFunctions(
-  client: socketIo.Socket,
-  server: socketIo.Server
-) {
-  function safeEmit<Event extends keyof SocketEvents>(
-    event: Event,
-    payload?: SocketEvents[Event]
-  ) {
-    client.emit(event, payload);
-  }
-  function safeOn<Event extends keyof SocketEvents>(
-    event: Event,
-    callback: (payload?: SocketEvents[Event]) => void
-  ) {
-    client.on(event, callback);
-  }
-  function safeRoomEmit<Event extends keyof SocketEvents>(
-    roomCode: string,
-    event: Event,
-    payload?: SocketEvents[Event]
-  ) {
-    server.to(roomCode).emit(event, payload);
-  }
-  return { safeEmit, safeOn, safeRoomEmit };
 }
