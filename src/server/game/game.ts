@@ -71,16 +71,17 @@ export default class Game {
         continue;
       }
       for (let p2 of players) {
-        if (!p2.alive) {
+        if (!p2.alive || p1.id === p2.id) {
           continue;
         }
         if (p1.distanceTo(p2) < p1.size + p2.size) {
           // Collision occured.
+          console.log('Collusion occured');
           if (p1.size > p2.size) {
-            p1.setSize(p1.size + 1);
+            p1.setSize(p1.size + 20);
             p2.setAlive(false);
           } else if (p2.size > p1.size) {
-            p2.setSize(p1.size + 1);
+            p2.setSize(p2.size + 20);
             p1.setAlive(false);
           }
         }

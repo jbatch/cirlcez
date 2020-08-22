@@ -4,4 +4,5 @@ type PlayerState = {
   color: string;
   x: number;
   y: number;
-}
+  size: number;
+};

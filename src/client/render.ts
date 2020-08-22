@@ -28,12 +28,18 @@ function renderAll() {
 function renderPlayer(playerState: PlayerState) {
   const { x, y } = playerState;
   const directionSizeRad = Math.PI / 2;
-
+  const playerRadius = 20;
   // draw filled circle
   ctx.beginPath();
-  ctx.arc(x, y, 20, 0, Math.PI * 2);
+  ctx.fillStyle = playerState.color;
+  ctx.arc(x - playerState.size, y - playerState.size, playerState.size, 0, Math.PI * 2);
   // ctx.fillRect(x, y, 50, 50);
   ctx.fill();
+  // render player name
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '48px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(playerState.username, playerState.x, playerState.y - playerState.size);
 
   // ctx.lineWidth = 4;
   // ctx.arc(x, y, 20, dir - directionSizeRad / 2, dir + directionSizeRad / 2);

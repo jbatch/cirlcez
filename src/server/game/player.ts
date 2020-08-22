@@ -5,11 +5,12 @@ export default class Player extends Entity {
   color: string;
   size: number;
   alive: boolean;
-  constructor(id: string, username: string, color: string, x: number, y: number, dir: number) {
+  constructor(id: string, color: string, username: string, x: number, y: number, dir: number) {
     super(id, x, y, dir, 250);
     this.username = username;
     this.color = color;
     this.alive = true;
+    this.size = 20 + Math.random() * 10;
   }
 
   update(dt: number) {
@@ -29,6 +30,7 @@ export default class Player extends Entity {
       ...super.serializeForUpdate(),
       username: this.username,
       color: this.color,
+      size: this.size,
     };
   }
 }

@@ -27,7 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setPlayerState(me);
     setOthersState(others);
     console.log('OTHERS', others.length);
-    console.log('ME', me.x, me.y);
+    console.log('ME', me.x, me.y, me);
+  });
+  safeOn('game-over', () => {
+    console.log('Game over!');
   });
 });
 

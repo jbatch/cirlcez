@@ -16,6 +16,7 @@ const state: GameState = {
     id: '',
     username: '',
     color: '',
+    size: 0,
   },
   others: [],
   t: 0,
