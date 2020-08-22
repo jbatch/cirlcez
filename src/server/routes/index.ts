@@ -6,5 +6,5 @@ function configure(app: Application) {
 }
 
 export default {
-  configure
+  configure,
 };

@@ -13,8 +13,8 @@ function getSocket() {
 function initialiseSocket() {
   socket = socketIO.connect(`ws://${window.location.host}`);
   socket.on('connect', () => {
-    console.log('Connected to server')
-    socket.on('game-state', (state: any) => console.log('Got game state', JSON.stringify(state)))
+    console.log('Connected to server');
+    socket.on('game-state', (state: any) => console.log('Got game state', JSON.stringify(state)));
   });
 
   return socket;
@@ -33,16 +33,10 @@ function initialiseSocket() {
   })
 } */
 
-function safeEmit<Event extends keyof SocketEvents>(
-  event: Event,
-  payload?: SocketEvents[Event]
-) {
+function safeEmit<Event extends keyof SocketEvents>(event: Event, payload?: SocketEvents[Event]) {
   getSocket().emit(event, payload);
 }
-function safeOn<Event extends keyof SocketEvents>(
-  event: Event,
-  callback: (payload?: SocketEvents[Event]) => void
-) {
+function safeOn<Event extends keyof SocketEvents>(event: Event, callback: (payload?: SocketEvents[Event]) => void) {
   getSocket().on(event, callback);
 }
 function safeOff<Event extends keyof SocketEvents>(event: Event) {

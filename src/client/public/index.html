@@ -15,24 +15,21 @@
     <meta name="msapplication-config" content="/assets/browserconfig.xml" />
     <meta name="theme-color" content="#ffffff" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link type="text/css" rel="stylesheet" href="/assets/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link type="text/css" rel="stylesheet" href="/assets/styles.css" />
 
     <title>Circlez.io Game</title>
   </head>
   <body>
     <main>
+      <canvas id="game-canvas"></canvas>
 
-      <div id="start-game-modal" class="z-depth-3">
+      <div id="start-game-modal" class="z-depth-3 hidden">
         <h1 class="flow-text">Circlez io Game</h1>
-        <blockquote class="flow-text">
-          Yet another <a href="https://agar.io">agar.io</a> clone!
-        </blockquote>
-        <input type="text" name="player-name" id="player-name" placeholder="Player Name">
+        <blockquote class="flow-text">Yet another <a href="https://agar.io">agar.io</a> clone!</blockquote>
+        <input type="text" name="player-name" id="player-name" placeholder="Player Name" />
         <button class="waves-effect waves-light btn-large mt-2" id="play-button">Play!</button>
       </div>
-
-      <canvas id="game-canvas"></canvas>
     </main>
     <footer>© 2020 Copyright Text</footer>
   </body>

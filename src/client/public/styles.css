@@ -3,7 +3,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   height: 100%;
   background-color: bisque;
@@ -16,7 +17,12 @@ html, body {
 /* Specific classes */
 
 #game-canvas {
-  border: 1px solid red;
+  border: 4px solid red;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
 }
 
 main {
@@ -36,9 +42,12 @@ main {
   align-items: center;
 }
 
-
 /* Utility classes */
 
 .mt-2 {
   margin-top: 16px;
+}
+
+.hidden {
+  display: none !important;
 }
