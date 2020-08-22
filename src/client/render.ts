@@ -22,19 +22,28 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('resize', debounce(40, setCanvasSize));
 
 function renderAll() {
-  const { me, others, serverFps } = getCurrentState();
-  ctx.clearRect(0, 0, gameCanvasEl.width, gameCanvasEl.height);
-  ctx.strokeStyle = '#ff0000';
+  const gameState = getCurrentState();
+  if (!gameState) return;
+  const { me, others, serverFps } = gameState;
 
-  renderPlayer(me);
-  others.forEach((other: PlayerState) => renderPlayer(other));
+  ctx.clearRect(0, 0, gameCanvasEl.width, gameCanvasEl.height);
+
   if (debugParams.debug) {
     // Render FPS counter
     const clientFps = 1 / ((Date.now() - lastRenderTime) / 1000);
     renderFpsCounter(serverFps, clientFps);
     renderPlayerCount(others.length + 1);
-    renderMapEdge();
   }
+
+  ctx.strokeStyle = '#ff0000';
+  ctx.save();
+  ctx.translate(gameCanvasEl.width / 2 - me.x, gameCanvasEl.height / 2 - me.y);
+
+  renderPlayer(me);
+  others.forEach((other: PlayerState) => renderPlayer(other));
+  renderMapEdge();
+  ctx.restore();
+
   lastRenderTime = Date.now();
 }
 
@@ -72,7 +81,7 @@ function renderFpsCounter(serverFps: number, clientFps: number) {
   ctx.font = '48px sans-serif';
   ctx.textAlign = 'right';
   ctx.fillText('Server FPS: ' + serverFps.toFixed(0), gameCanvasEl.width * 0.95, gameCanvasEl.height * 0.05);
-  ctx.fillText('Client FPS: ' + clientFps.toFixed(0), gameCanvasEl.width * 0.95, gameCanvasEl.height * 0.1);
+  // ctx.fillText('Client FPS: ' + clientFps.toFixed(0), gameCanvasEl.width * 0.95, gameCanvasEl.height * 0.1);
 }
 
 function renderPlayerCount(playerCount: number) {

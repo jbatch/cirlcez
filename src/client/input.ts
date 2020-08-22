@@ -9,8 +9,10 @@ function onTouchMove(e: TouchEvent) {
 }
 
 function handleInput({ clientX, clientY }: { clientX: number; clientY: number }) {
-  const { me } = getCurrentState();
-  const dir = Math.atan2(clientX - me.x, me.y - clientY);
+  const currentState = getCurrentState();
+  if (!currentState) return;
+  const { me } = currentState;
+  const dir = Math.atan2(clientX - window.innerWidth / 2, window.innerHeight / 2 - clientY);
   sendClientDirection(dir);
 }
 

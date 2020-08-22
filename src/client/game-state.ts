@@ -35,9 +35,9 @@ function getBaseUpdateIdx() {
   return -1;
 }
 
-export function getCurrentState() {
+export function getCurrentState(): GameStateMessage {
   if (!firstServerTime) {
-    return {};
+    return null;
   }
 
   const baseUpdateIdx = getBaseUpdateIdx();
@@ -54,6 +54,7 @@ export function getCurrentState() {
     const ratio = (serverTime - baseUpdate.t) / (next.t - baseUpdate.t);
 
     return {
+      t: baseUpdate.t,
       me: interpolateObject(baseUpdate.me, next.me, ratio),
       others: interpolateObjectArray(baseUpdate.others, next.others, ratio),
       serverFps: baseUpdate.serverFps,
