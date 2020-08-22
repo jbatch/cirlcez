@@ -27,7 +27,9 @@
     "pino": "^6.4.1",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.7",
@@ -42,6 +44,8 @@
     "@types/webpack-dev-server": "^3.11.0",
     "@typescript-eslint/eslint-plugin": "^3.7.1",
     "@typescript-eslint/parser": "^3.7.1",
+    "@types/socket.io": "^2.1.10",
+    "@types/socket.io-client": "^1.4.33",
     "copy-webpack-plugin": "^6.0.3",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",

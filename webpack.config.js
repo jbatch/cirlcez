@@ -17,6 +17,12 @@ const config = {
     stats: 'errors-only',
     port: 8000,
     compress: true,
+    proxy: [
+      {
+        context: ['/socket.io', '/api'],
+        target: 'http://localhost:9000'
+      }
+    ]
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
