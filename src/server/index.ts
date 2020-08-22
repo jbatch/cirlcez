@@ -8,6 +8,7 @@ import routes from './routes';
 import Game from './game/game';
 import { configureSockets } from './sockets/sockets';
 import http from 'http';
+import path from 'path';
 
 const logger = pino();
 
@@ -28,6 +29,11 @@ async function main() {
 
   // Initalize socketIO
   configureSockets(server, game);
+
+  // If not matched anything yet server from dist
+  if ((process.env.NODE_ENV = 'production')) {
+    app.use(express.static(path.join(__dirname, '..', 'client')));
+  }
 
   const port = Number(process.env.PORT) || 9000;
   const host = process.env.HOST || 'localhost';
