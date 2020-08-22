@@ -1,7 +1,4 @@
-dist
 node_modules
-.env
-docker/mysql
-docker/redis
-yarn-error.log
+dist
 .DS_Store
+.env

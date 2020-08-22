@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "typescript.preferences.importModuleSpecifier": "relative",
+  // forces vscode to accept tsconfig files as JSON5 (JSON with comments)
+  "files.associations": {
+    "tsconfig.json": "jsonc",
+    ".vscode/settings.json": "jsonc"
+  }
+}
