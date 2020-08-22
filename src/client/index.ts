@@ -3,19 +3,30 @@ import { startRenderInterval, stopRenderInterval } from './render';
 import { startCapturingInput, stopCapturingInput } from './input';
 import { joinGame } from './network';
 import { setPlayerState, setOthersState } from './game-state';
+import { getDebugParams } from './debug';
 
 const socket = initialiseSocket();
 let playerNameEl: HTMLInputElement;
 let playerNameErrorEl: HTMLDivElement;
 let startGameButtonEl: HTMLButtonElement;
+let modalTitleEl: HTMLDivElement;
+let startGameModal: HTMLDivElement;
 
 document.addEventListener('DOMContentLoaded', () => {
   playerNameEl = document.getElementById('player-name') as HTMLInputElement;
   playerNameErrorEl = document.getElementById('player-name-error') as HTMLDivElement;
   startGameButtonEl = document.getElementById('play-button') as HTMLButtonElement;
+  modalTitleEl = document.getElementById('modal-title') as HTMLDivElement;
+  startGameModal = document.getElementById('start-game-modal') as HTMLDivElement;
+
+  const debugParams = getDebugParams();
+  if (debugParams.debug) {
+    const name = debugParams.name || 'Agar.io';
+    startGameModal.classList.add('hidden');
+    joinGame(name + '-' + Math.floor(Math.random() * 100));
+  }
 
   // todo: remove
-  joinGame('Luke');
   startCapturingInput();
   startRenderInterval();
 
@@ -30,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('ME', me.x, me.y, me);
   });
   safeOn('game-over', () => {
+    modalTitleEl.innerText = 'Game Over!';
+    startGameModal.classList.remove('hidden');
+
     console.log('Game over!');
   });
 });
@@ -39,7 +53,7 @@ function onPlayButtonClick() {
   if (!playerName) {
     return alert('Player name is required');
   }
-  console.log('Joining');
+  startGameModal.classList.add('hidden');
   joinGame(playerName);
 }
 
