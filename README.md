@@ -1,19 +1,9 @@
-# 2020 Node Typescript Webpack Fullstack Template
+# Circlez
 
-What it says on the box:
+* [Trello Board](https://trello.com/b/chaEaO9A/circlez)
 
-- Node + Express backend
-- Typescript
-- Webpack
-- Static App
-- Template
+[Live demo](https://circlez.jbat.ch)
 
-## Features
+# Development
 
-- eslint + typescript + prettier + lint-staged
-
-## Getting Started
-
-```
-git clone git@github.com:lukebatchelor/2020-typescript-webpack-static-app-template.git
-```
+# Deployment
