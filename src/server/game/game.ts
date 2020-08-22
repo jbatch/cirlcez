@@ -1,6 +1,7 @@
 import Player from './player';
 import { SafeSocket } from '../sockets/safe-socket';
 import pino from 'pino';
+import Constants from '../../shared/constants';
 
 const FRAMES_PER_SECOND = 30; // 60;
 
@@ -24,7 +25,11 @@ export default class Game {
   addPlayer(socket: SafeSocket, username: string) {
     this.sockets[socket.id] = socket;
     const color = '#' + ((Math.random() * 0xffffff) << 0).toString(16);
-    this.players[socket.id] = new Player(socket.id, color, username, 0, 0, 0);
+    const [x, y] = [
+      (Math.random() * (0.8 - 0.2) + 0.2) * Constants.MAP_SIZE,
+      (Math.random() * (0.8 - 0.2) + 0.2) * Constants.MAP_SIZE,
+    ];
+    this.players[socket.id] = new Player(socket.id, color, username, x, y, 0);
   }
 
   removePlayer(socket: SafeSocket) {
