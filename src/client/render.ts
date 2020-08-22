@@ -1,5 +1,5 @@
 import { debounce } from 'throttle-debounce';
-import { getState } from './game-state';
+import { getCurrentState } from './game-state';
 
 const FPS = 60;
 let gameCanvasEl: HTMLCanvasElement;
@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('resize', debounce(40, setCanvasSize));
 
 function renderAll() {
-  const { playerState, others } = getState();
+  const { me, others } = getCurrentState();
   ctx.clearRect(0, 0, gameCanvasEl.width, gameCanvasEl.height);
   ctx.strokeStyle = '#ff0000';
 
   ctx.fillRect(10, 10, 50, 50);
-  renderPlayer(playerState);
-  others.forEach((other) => renderPlayer(other));
+  renderPlayer(me);
+  others.forEach((other: PlayerState) => renderPlayer(other));
 }
 
 function renderPlayer(playerState: PlayerState) {

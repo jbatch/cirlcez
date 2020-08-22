@@ -2,7 +2,7 @@ import { initialiseSocket, safeOn, safeEmit } from './sockets';
 import { startRenderInterval, stopRenderInterval } from './render';
 import { startCapturingInput, stopCapturingInput } from './input';
 import { joinGame } from './network';
-import { setPlayerState, setOthersState } from './game-state';
+import { processGameUpdate } from './game-state';
 import { getDebugParams } from './debug';
 
 const socket = initialiseSocket();
@@ -35,8 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   safeOn('game-state', (gameState) => {
     const { t, me, others } = gameState;
-    setPlayerState(me);
-    setOthersState(others);
+    processGameUpdate(gameState);
     console.log('OTHERS', others.length);
     console.log('ME', me.x, me.y, me);
   });
