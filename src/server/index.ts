@@ -5,11 +5,15 @@ import pino from 'pino';
 
 import middleware from './routes/middleware';
 import routes from './routes';
+import Game from './game/game';
+import { configureSockets } from './sockets/sockets';
+import http from 'http';
 
 const logger = pino();
 
 async function main() {
   const app = express();
+  const server = http.createServer(app)
 
   // Add top level middleware
   middleware.configure(app);
@@ -18,6 +22,11 @@ async function main() {
   routes.configure(app);
 
   middleware.configureErrorMiddleware(app);
+
+  // Create single instance of game for all players to use
+  const game = new Game();
+  // Initalize socketIO
+  configureSockets(server, game);
 
   const port = process.env.PORT || 9000;
   try {

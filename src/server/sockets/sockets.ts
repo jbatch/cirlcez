@@ -1,10 +1,11 @@
 import socketIo from 'socket.io';
 import http from 'http';
 import pino from 'pino';
+import Game from '../game/game';
 
 const logger = pino();
 
-export function configureSockets(appServer: http.Server) {
+export function configureSockets(appServer: http.Server, game: Game) {
   const server = socketIo(appServer);
 
   server.on('connect', (client: socketIo.Socket & {username: string}) => {
