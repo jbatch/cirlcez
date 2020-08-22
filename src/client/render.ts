@@ -16,18 +16,29 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('resize', debounce(40, setCanvasSize));
 
 function renderAll() {
-  const { playerState } = getState();
+  const { playerState, others } = getState();
   ctx.clearRect(0, 0, gameCanvasEl.width, gameCanvasEl.height);
   ctx.strokeStyle = '#ff0000';
 
   ctx.fillRect(10, 10, 50, 50);
   renderPlayer(playerState);
+  others.forEach((other) => renderPlayer(other));
 }
 
 function renderPlayer(playerState: PlayerState) {
   const { x, y } = playerState;
-  // ctx.arc(x, y, 20, 0, Math.PI);
-  ctx.fillRect(x, y, 50, 50);
+  const directionSizeRad = Math.PI / 2;
+
+  // draw filled circle
+  ctx.beginPath();
+  ctx.arc(x, y, 20, 0, Math.PI * 2);
+  // ctx.fillRect(x, y, 50, 50);
+  ctx.fill();
+
+  // ctx.lineWidth = 4;
+  // ctx.arc(x, y, 20, dir - directionSizeRad / 2, dir + directionSizeRad / 2);
+  // // draw directoin stroke
+  // ctx.stroke();
 }
 
 function setCanvasSize() {

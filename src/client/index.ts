@@ -2,7 +2,7 @@ import { initialiseSocket, safeOn, safeEmit } from './sockets';
 import { startRenderInterval, stopRenderInterval } from './render';
 import { startCapturingInput, stopCapturingInput } from './input';
 import { joinGame } from './network';
-import { setPlayerState } from './game-state';
+import { setPlayerState, setOthersState } from './game-state';
 
 const socket = initialiseSocket();
 let playerNameEl: HTMLInputElement;
@@ -23,9 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
     addEventHandlers();
   });
   safeOn('game-state', (gameState) => {
-    const { t, me } = gameState;
+    const { t, me, others } = gameState;
     setPlayerState(me);
-    console.log(me);
+    setOthersState(others);
+    console.log('OTHERS', others.length);
+    console.log('ME', me.x, me.y);
   });
 });
 

@@ -1,4 +1,4 @@
-import { updateDirectionRad } from './game-state';
+import { updateDirectionRad, getState } from './game-state';
 import { sendClientDirection } from './network';
 
 function onMouseMove(e: MouseEvent) {
@@ -9,7 +9,8 @@ function onTouchMove(e: TouchEvent) {
 }
 
 function handleInput({ clientX, clientY }: { clientX: number; clientY: number }) {
-  const dir = Math.atan2(clientX - window.innerWidth / 2, window.innerHeight / 2 - clientY);
+  const { playerState } = getState();
+  const dir = Math.atan2(clientX - playerState.x, playerState.y - clientY);
   updateDirectionRad(dir);
   sendClientDirection(dir);
 }

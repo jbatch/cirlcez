@@ -30,9 +30,10 @@ export function getState() {
 }
 
 export function setPlayerState(playerState: PlayerState) {
-  console.log('a', playerState.y);
   state.playerState = playerState;
-  console.log('b', playerState.y);
+}
+export function setOthersState(others: Array<PlayerState>) {
+  state.others = others;
 }
 
 const updateDirectionRad = throttle(40, false, _updateDirectionRad);

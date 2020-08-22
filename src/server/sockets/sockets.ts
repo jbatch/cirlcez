@@ -8,7 +8,7 @@ import { getSafeSocket } from './safe-socket';
 const logger = pino();
 
 export function configureSockets(appServer: http.Server, game: Game) {
-  const server = socketIo(appServer);
+  const server = socketIo(appServer, { pingTimeout: 2000, pingInterval: 1000 });
 
   server.on('connect', (client: socketIo.Socket & { username: string }) => {
     logger.info('Client connected');
