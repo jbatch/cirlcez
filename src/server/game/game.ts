@@ -1,7 +1,10 @@
 import Player from './player';
 import { SafeSocket } from '../sockets/safe-socket';
+import pino from 'pino';
 
-const FRAMES_PER_SECOND = 60; // 60;
+const FRAMES_PER_SECOND = 30; // 60;
+
+const logger = pino();
 
 export default class Game {
   sockets: { [id: string]: SafeSocket };
@@ -18,7 +21,8 @@ export default class Game {
 
   addPlayer(socket: SafeSocket, username: string) {
     this.sockets[socket.id] = socket;
-    this.players[socket.id] = new Player(socket.id, '#FF0000', username, 0, 0, 0);
+    const color = '#' + ((Math.random() * 0xffffff) << 0).toString(16);
+    this.players[socket.id] = new Player(socket.id, color, username, 0, 0, 0);
   }
 
   removePlayer(socket: SafeSocket) {
@@ -34,6 +38,7 @@ export default class Game {
 
   update() {
     // Calculate time elapsed
+    const lastUpdate = this.lastUpdatedTime;
     const now = Date.now();
     const dt = (now - this.lastUpdatedTime) / 1000;
     this.lastUpdatedTime = now;
@@ -66,6 +71,8 @@ export default class Game {
         });
       }
     });
+    const timeToProcessUpdate = (this.lastUpdatedTime - lastUpdate) / 1000;
+    logger.info('Server FPS: ' + 1 / timeToProcessUpdate);
   }
 
   applyCollisions(players: Array<Player>) {
