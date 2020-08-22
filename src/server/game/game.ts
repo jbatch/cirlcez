@@ -50,17 +50,21 @@ export default class Game {
     Object.entries(this.sockets).forEach(([id, socket]) => {
       const player = this.players[id];
       if (!player.alive) {
-        socket.safeEmit('game-over', {});
+        if (socket) {
+          socket.safeEmit('game-over', {});
+        }
         this.removePlayer(socket);
         return;
       }
-      socket.safeEmit('game-state', {
-        t: Date.now(),
-        me: player.serializeForUpdate(),
-        others: Object.values(this.players)
-          .filter((p) => p.id != player.id)
-          .map((p) => p.serializeForUpdate()),
-      });
+      if (socket) {
+        socket.safeEmit('game-state', {
+          t: Date.now(),
+          me: player.serializeForUpdate(),
+          others: Object.values(this.players)
+            .filter((p) => p.id != player.id)
+            .map((p) => p.serializeForUpdate()),
+        });
+      }
     });
   }
 
@@ -78,10 +82,10 @@ export default class Game {
           // Collision occured.
           console.log('Collusion occured');
           if (p1.size > p2.size) {
-            p1.setSize(p1.size + 20);
+            p1.setSize(p1.size + 10);
             p2.setAlive(false);
-          } else if (p2.size > p1.size) {
-            p2.setSize(p2.size + 20);
+          } else if (p2.size >= p1.size) {
+            p2.setSize(p2.size + 10);
             p1.setAlive(false);
           }
         }

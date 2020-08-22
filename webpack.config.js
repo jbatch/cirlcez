@@ -17,13 +17,14 @@ const config = {
     contentBasePublicPath: '/',
     stats: 'errors-only',
     port: 8000,
+    host: process.env.HOST || 'localhost',
     compress: true,
     proxy: [
       {
         context: ['/socket.io', '/api'],
-        target: 'http://localhost:9000'
-      }
-    ]
+        target: `http://${process.env.HOST || 'localhost'}:9000`,
+      },
+    ],
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -37,7 +38,7 @@ const config = {
       PUBLIC_URL: 'http://localhost:8000',
     }),
     new CopyPlugin({
-      patterns: [{ from: './public', to: './assets', globOptions: { ignore: ['*.html']} }],
+      patterns: [{ from: './public', to: './assets', globOptions: { ignore: ['*.html'] } }],
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',

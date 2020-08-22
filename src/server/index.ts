@@ -13,7 +13,7 @@ const logger = pino();
 
 async function main() {
   const app = express();
-  const server = http.createServer(app)
+  const server = http.createServer(app);
 
   // Add top level middleware
   middleware.configure(app);
@@ -29,10 +29,11 @@ async function main() {
   // Initalize socketIO
   configureSockets(server, game);
 
-  const port = process.env.PORT || 9000;
+  const port = Number(process.env.PORT) || 9000;
+  const host = process.env.HOST || 'localhost';
   try {
-    server.listen(port, () => {
-      logger.info(`listening on port ${port}`);
+    server.listen(port, host, () => {
+      logger.info(`listening on ${host}:${port}`);
     });
   } catch (error) {
     logger.error('Uncaught error: ', error);
