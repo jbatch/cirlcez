@@ -3,7 +3,7 @@ import { SafeSocket } from '../sockets/safe-socket';
 import pino from 'pino';
 import Constants from '../../shared/constants';
 
-const FRAMES_PER_SECOND = 30; // 60;
+const FRAMES_PER_SECOND = 60; // 60;
 
 const logger = pino();
 
