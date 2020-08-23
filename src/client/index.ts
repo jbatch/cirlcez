@@ -4,26 +4,26 @@ import { startCapturingInput, stopCapturingInput } from './input';
 import { joinGame } from './network';
 import { processGameUpdate } from './game-state';
 import { getDebugParams } from './debug';
-import { initUi, showStartModal, setPlayButtonEnabled } from './ui';
+import { initUi, showModal, setPlayButtonEnabled } from './ui';
 
 const socket = initialiseSocket();
 
 function startPlaying(name: string) {
-  showStartModal(false);
+  showModal(false);
   startCapturingInput();
   startRenderInterval();
   joinGame(name);
 }
 
-function stopPlaying(message: string) {
-  showStartModal(true, message);
+function stopPlaying(message: string, message2?: string) {
+  showModal(true, message, message2);
   stopCapturingInput();
   stopRenderInterval();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   initUi({ startPlaying });
-  showStartModal(true, 'Circlez io');
+  showModal(true, 'Circlez io');
   const debugParams = getDebugParams();
   if (debugParams.debug) {
     const name = debugParams.name + '-' + Math.floor(Math.random() * 100);
@@ -41,6 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     processGameUpdate(gameState);
   });
   safeOn('game-over', ({ vendetta }) => {
-    stopPlaying('Game Over!');
+    stopPlaying('Game Over!', `You were killed by ${vendetta.username}`);
   });
 });

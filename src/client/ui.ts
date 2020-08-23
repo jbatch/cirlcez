@@ -2,6 +2,7 @@ let playerNameEl: HTMLInputElement;
 let startGameButtonEl: HTMLButtonElement;
 let modalTitleEl: HTMLDivElement;
 let startGameModal: HTMLDivElement;
+let modalSecondaryEl: HTMLDivElement;
 
 type InitUiProps = {
   startPlaying: (name: string) => void;
@@ -12,6 +13,7 @@ export function initUi(initUiProps: InitUiProps) {
   startGameButtonEl = document.getElementById('play-button') as HTMLButtonElement;
   modalTitleEl = document.getElementById('modal-title') as HTMLDivElement;
   startGameModal = document.getElementById('start-game-modal') as HTMLDivElement;
+  modalSecondaryEl = document.getElementById('modal-secondary-text') as HTMLDivElement;
 
   addEventListeners(initUiProps);
 }
@@ -20,15 +22,16 @@ function addEventListeners(initUiProps: InitUiProps) {
   startGameButtonEl.addEventListener('click', () => {
     const playerName = playerNameEl.value || 'Anon';
     storeLastName(playerName);
-    showStartModal(false);
+    showModal(false);
     setPlayButtonEnabled(false);
     initUiProps.startPlaying(playerName);
   });
 }
 
-export function showStartModal(show: boolean, str?: string) {
+export function showModal(show: boolean, str?: string, str2?: string) {
   if (show) {
-    modalTitleEl.innerText = str || '';
+    modalTitleEl.innerText = str || 'Circlez io';
+    modalSecondaryEl.innerText = str2 || 'Yet another Agar.io clone!';
     playerNameEl.value = getLastName();
     startGameModal.classList.remove('hidden');
   } else {

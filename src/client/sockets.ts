@@ -13,7 +13,7 @@ function getSocket() {
 function initialiseSocket() {
   socket = socketIO.connect(`ws://${window.location.host}`);
   socket.on('connect', () => {
-    console.log('Connected to server');
+    console.log('Connected to server~');
   });
 
   return socket;
