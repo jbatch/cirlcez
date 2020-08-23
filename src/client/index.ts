@@ -8,8 +8,15 @@ import { initUi, showStartModal } from './ui';
 
 const socket = initialiseSocket();
 
+function startPlaying(name: string) {
+  showStartModal(false);
+  startCapturingInput();
+  startRenderInterval();
+  joinGame(name);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  initUi();
+  initUi({ startPlaying });
   const debugParams = getDebugParams();
   if (debugParams.debug) {
     const name = debugParams.name + '-' + Math.floor(Math.random() * 100);
@@ -29,10 +36,3 @@ document.addEventListener('DOMContentLoaded', () => {
     stopRenderInterval();
   });
 });
-
-function startPlaying(name: string) {
-  showStartModal(false);
-  startCapturingInput();
-  startRenderInterval();
-  joinGame(name);
-}
