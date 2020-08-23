@@ -42,5 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   safeOn('game-over', ({ vendetta }) => {
     stopPlaying('Game Over!', `You were killed by ${vendetta.username}`);
+    setPlayButtonEnabled(true);
   });
 });

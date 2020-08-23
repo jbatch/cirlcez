@@ -40,6 +40,7 @@ function renderAll() {
   ctx.save();
   ctx.translate(gameCanvasEl.width / 2 - me.x, gameCanvasEl.height / 2 - me.y);
 
+  renderMapGrid();
   renderPlayer(me);
   others.forEach(renderPlayer);
   collectables.forEach(renderCollectable);
@@ -103,8 +104,28 @@ function renderPlayerCount(playerCount: number) {
 }
 
 function renderMapEdge() {
+  var gradient = ctx.createLinearGradient(0, 0, 1000, 0);
+  gradient.addColorStop(0, 'magenta');
+  gradient.addColorStop(0.5, 'blue');
+  gradient.addColorStop(1.0, 'red');
+  ctx.strokeStyle = gradient;
+  ctx.lineWidth = 5;
   ctx.fillStyle = '#aa00aa';
   ctx.strokeRect(0, 0, Constants.MAP_SIZE, Constants.MAP_SIZE);
+}
+
+function renderMapGrid(gridSize: number = 70, padding: number = 0) {
+  for (var x = 0; x <= Constants.MAP_SIZE; x += gridSize) {
+    ctx.moveTo(0.5 + x + padding, padding);
+    ctx.lineTo(0.5 + x + padding, Constants.MAP_SIZE + padding);
+  }
+
+  for (var x = 0; x <= Constants.MAP_SIZE; x += gridSize) {
+    ctx.moveTo(padding, 0.5 + x + padding);
+    ctx.lineTo(Constants.MAP_SIZE + padding, 0.5 + x + padding);
+  }
+  ctx.strokeStyle = '#9e9e9e';
+  ctx.stroke();
 }
 
 export function startRenderInterval() {
