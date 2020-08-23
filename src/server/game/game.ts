@@ -127,7 +127,7 @@ export default class Game {
         if (!p2.alive || p1.id === p2.id) {
           continue;
         }
-        if (p1.distanceTo(p2) < p1.size + p2.size) {
+        if (p1.distanceTo(p2) < p1.size + p2.size - Constants.COLLISION_THRESHOLD) {
           // Collision occured.
           if (p1.size > p2.size) {
             p1.setSize(p1.size + 10);
