@@ -4,7 +4,7 @@ import { startCapturingInput, stopCapturingInput } from './input';
 import { joinGame } from './network';
 import { processGameUpdate } from './game-state';
 import { getDebugParams } from './debug';
-import { initUi, showStartModal } from './ui';
+import { initUi, showStartModal, setPlayButtonEnabled } from './ui';
 
 const socket = initialiseSocket();
 
@@ -30,15 +30,17 @@ document.addEventListener('DOMContentLoaded', () => {
     startPlaying(name);
   }
 
-  socket.on('connect', () => {});
+  socket.on('connect', () => {
+    setPlayButtonEnabled(true);
+  });
   safeOn('disconnect', () => {
     stopPlaying('Server Disconnected!');
+    setPlayButtonEnabled(false);
   });
   safeOn('game-state', (gameState) => {
     processGameUpdate(gameState);
   });
   safeOn('game-over', ({ vendetta }) => {
-    console.log(vendetta);
     stopPlaying('Game Over!');
   });
 });

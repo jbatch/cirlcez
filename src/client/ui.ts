@@ -21,6 +21,7 @@ function addEventListeners(initUiProps: InitUiProps) {
     const playerName = playerNameEl.value || 'Anon';
     storeLastName(playerName);
     showStartModal(false);
+    setPlayButtonEnabled(false);
     initUiProps.startPlaying(playerName);
   });
 }
@@ -33,6 +34,10 @@ export function showStartModal(show: boolean, str?: string) {
   } else {
     startGameModal.classList.add('hidden');
   }
+}
+
+export function setPlayButtonEnabled(enabled: boolean) {
+  startGameButtonEl.disabled = !enabled;
 }
 
 function storeLastName(name: string) {
