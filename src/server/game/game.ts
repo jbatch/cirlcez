@@ -88,6 +88,15 @@ export default class Game {
       const socket = this.sockets[id];
       if (!player.alive) {
         if (socket) {
+          socket.safeEmit('game-state', {
+            t: Date.now(),
+            serverFps: 1 / dt,
+            me: player.serializeForUpdate(),
+            others: Object.values(this.players)
+              .filter((p) => p.id != player.id)
+              .map((p) => p.serializeForUpdate()),
+            collectables: this.collectables.map((c) => c.serializeForUpdate()),
+          });
           socket.safeEmit('game-over', { vendetta: player.vendetta });
         }
         this.removePlayer(socket);
