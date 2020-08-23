@@ -26,8 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
   socket.on('connect', () => {});
   safeOn('disconnect', () => {});
   safeOn('game-state', (gameState) => {
-    const { t, me, others } = gameState;
-
     processGameUpdate(gameState);
   });
   safeOn('game-over', ({ vendetta }) => {
