@@ -1,8 +1,13 @@
+import { getDebugParams } from './debug';
 export function setPreviousName(name: string) {
   localStorage.setItem('lastName', name);
 }
 
 export function getPreviousName() {
+  const debugParams = getDebugParams();
+  if (debugParams.debug) {
+    return debugParams.name;
+  }
   return localStorage.getItem('lastName') || '';
 }
 
