@@ -2,6 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const dotenv = require('dotenv');
+const dotenvConfig = dotenv.config().parsed;
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
@@ -36,6 +38,7 @@ const config = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
       PUBLIC_URL: 'http://localhost:8000',
+      ...dotenvConfig,
     }),
     new CopyPlugin({
       patterns: [{ from: './public', to: './assets', globOptions: { ignore: ['*.html'] } }],
