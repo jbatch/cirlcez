@@ -52,8 +52,6 @@ function renderAll() {
 
 function renderPlayer(playerState: PlayerState) {
   const { x, y } = playerState;
-  const directionSizeRad = Math.PI / 2;
-  const playerRadius = 20;
   // draw filled circle
   ctx.beginPath();
   ctx.fillStyle = playerState.color;
@@ -62,9 +60,9 @@ function renderPlayer(playerState: PlayerState) {
 
   // render player name
   ctx.fillStyle = '#ffffff';
-  ctx.font = '48px sans-serif';
+  ctx.font = '40px sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText(playerState.username, playerState.x, playerState.y - playerState.size);
+  ctx.fillText(playerState.username, playerState.x, playerState.y - playerState.size - 10);
 
   // ctx.lineWidth = 4;
   // ctx.arc(x, y, 20, dir - directionSizeRad / 2, dir + directionSizeRad / 2);
