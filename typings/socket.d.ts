@@ -11,7 +11,7 @@ type InputMessage = {
   dir: number;
   throttle?: number;
 };
-type GameOverMessage = {};
+type GameOverMessage = { vendetta: { id: string; username: string } };
 
 type SocketEvents = {
   join: JoinMessage;

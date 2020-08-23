@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     processGameUpdate(gameState);
   });
-  safeOn('game-over', () => {
+  safeOn('game-over', ({ vendetta }) => {
+    console.log(vendetta);
     showStartModal(true, 'Game Over!');
     stopCapturingInput();
     stopRenderInterval();

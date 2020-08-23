@@ -8,6 +8,7 @@ export default class Player extends Entity {
   throttle: number;
   maxSpeed: number;
   alive: boolean;
+  vendetta: { id: string; username: string };
   constructor(id: string, color: string, username: string, x: number, y: number, dir: number) {
     super(id, x, y, dir, 250);
     this.username = username;
@@ -16,6 +17,7 @@ export default class Player extends Entity {
     this.size = 20 + Math.random() * 10;
     this.throttle = 0;
     this.maxSpeed = 250;
+    this.vendetta = null;
   }
 
   update(dt: number) {
@@ -43,6 +45,10 @@ export default class Player extends Entity {
 
   setAlive(alive: boolean) {
     this.alive = alive;
+  }
+
+  setVendetta({ id, username }: { id: string; username: string }) {
+    this.vendetta = { id, username };
   }
 
   serializeForUpdate(): PlayerState {

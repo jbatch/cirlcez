@@ -88,7 +88,7 @@ export default class Game {
       const socket = this.sockets[id];
       if (!player.alive) {
         if (socket) {
-          socket.safeEmit('game-over', {});
+          socket.safeEmit('game-over', { vendetta: player.vendetta });
         }
         this.removePlayer(socket);
         return;
@@ -123,9 +123,11 @@ export default class Game {
           if (p1.size > p2.size) {
             p1.setSize(p1.size + 10);
             p2.setAlive(false);
+            p2.setVendetta({ id: p1.id, username: p1.username });
           } else if (p2.size >= p1.size) {
             p2.setSize(p2.size + 10);
             p1.setAlive(false);
+            p2.setVendetta({ id: p2.id, username: p2.username });
           }
         }
       }
