@@ -15,6 +15,12 @@ function startPlaying(name: string) {
   joinGame(name);
 }
 
+function stopPlaying(message: string) {
+  showStartModal(true, message);
+  stopCapturingInput();
+  stopRenderInterval();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initUi({ startPlaying });
   showStartModal(true, 'Circlez io');
@@ -25,14 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   socket.on('connect', () => {});
-  safeOn('disconnect', () => {});
+  safeOn('disconnect', () => {
+    stopPlaying('Server Disconnected!');
+  });
   safeOn('game-state', (gameState) => {
     processGameUpdate(gameState);
   });
   safeOn('game-over', ({ vendetta }) => {
     console.log(vendetta);
-    showStartModal(true, 'Game Over!');
-    stopCapturingInput();
-    stopRenderInterval();
+    stopPlaying('Game Over!');
   });
 });
