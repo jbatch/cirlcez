@@ -42,6 +42,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transform: translateZ(0);
 }
 
 /* Utility classes */

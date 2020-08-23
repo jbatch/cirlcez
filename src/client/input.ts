@@ -32,7 +32,7 @@ function mapRange(inStart: number, inEnd: number, outStart: number, outEnd: numb
 
 export function startCapturingInput() {
   window.addEventListener('mousemove', onMouseMove);
-  window.addEventListener('touchmove', onTouchMove);
+  window.addEventListener('touchmove', onTouchMove, { passive: false });
 }
 export function stopCapturingInput() {
   window.removeEventListener('mousemove', onMouseMove);

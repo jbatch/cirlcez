@@ -1,7 +1,4 @@
-import { joinGame } from './network';
-
 let playerNameEl: HTMLInputElement;
-let playerNameErrorEl: HTMLDivElement;
 let startGameButtonEl: HTMLButtonElement;
 let modalTitleEl: HTMLDivElement;
 let startGameModal: HTMLDivElement;
@@ -12,7 +9,6 @@ type InitUiProps = {
 
 export function initUi(initUiProps: InitUiProps) {
   playerNameEl = document.getElementById('player-name') as HTMLInputElement;
-  playerNameErrorEl = document.getElementById('player-name-error') as HTMLDivElement;
   startGameButtonEl = document.getElementById('play-button') as HTMLButtonElement;
   modalTitleEl = document.getElementById('modal-title') as HTMLDivElement;
   startGameModal = document.getElementById('start-game-modal') as HTMLDivElement;
@@ -22,10 +18,8 @@ export function initUi(initUiProps: InitUiProps) {
 
 function addEventListeners(initUiProps: InitUiProps) {
   startGameButtonEl.addEventListener('click', () => {
-    const playerName = playerNameEl.value;
-    if (!playerName) {
-      return alert('Player name is required');
-    }
+    const playerName = playerNameEl.value || 'Anon';
+    storeLastName(playerName);
     showStartModal(false);
     initUiProps.startPlaying(playerName);
   });
@@ -34,10 +28,17 @@ function addEventListeners(initUiProps: InitUiProps) {
 export function showStartModal(show: boolean, str?: string) {
   if (show) {
     modalTitleEl.innerText = str || '';
+    playerNameEl.value = getLastName();
     startGameModal.classList.remove('hidden');
   } else {
     startGameModal.classList.add('hidden');
   }
 }
 
-function setNameError(error: boolean, str?: string) {}
+function storeLastName(name: string) {
+  localStorage.setItem('lastName', name);
+}
+
+function getLastName() {
+  return localStorage.getItem('lastName') || '';
+}

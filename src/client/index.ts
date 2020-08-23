@@ -17,6 +17,7 @@ function startPlaying(name: string) {
 
 document.addEventListener('DOMContentLoaded', () => {
   initUi({ startPlaying });
+  showStartModal(true, 'Circlez io');
   const debugParams = getDebugParams();
   if (debugParams.debug) {
     const name = debugParams.name + '-' + Math.floor(Math.random() * 100);
