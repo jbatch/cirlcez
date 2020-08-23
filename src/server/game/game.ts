@@ -2,24 +2,32 @@ import Player from './player';
 import { SafeSocket } from '../sockets/safe-socket';
 import pino from 'pino';
 import Constants from '../../shared/constants';
+import Collectable from './collectable';
+import shortId from 'shortid';
 
 const FRAMES_PER_SECOND = 60; // 60;
+const NUM_COLLECTABLES = 20;
 
 const logger = pino();
 
 export default class Game {
   sockets: { [id: string]: SafeSocket };
   players: { [id: string]: Player };
+  collectables: Array<Collectable>;
   lastUpdatedTime: number;
   shouldSendUpdate: boolean;
   constructor() {
     this.sockets = {};
     this.players = {};
+    this.collectables = [];
     this.lastUpdatedTime = Date.now();
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / FRAMES_PER_SECOND);
 
-    // Add bot player
+    // Add collectables
+    while (this.collectables.length < NUM_COLLECTABLES) {
+      this.addCollectable();
+    }
   }
 
   addPlayer(socket: SafeSocket, username: string) {
@@ -44,6 +52,16 @@ export default class Game {
     }
   }
 
+  addCollectable() {
+    const [x, y] = [
+      (Math.random() * (0.95 - 0.05) + 0.05) * Constants.MAP_SIZE,
+      (Math.random() * (0.95 - 0.05) + 0.05) * Constants.MAP_SIZE,
+    ];
+    const color = '#' + ((Math.random() * 0xffffff) << 0).toString(16);
+    const collectable = new Collectable(shortId.generate(), x, y, 5, color);
+    this.collectables.push(collectable);
+  }
+
   update() {
     // Calculate time elapsed
     const now = Date.now();
@@ -58,6 +76,12 @@ export default class Game {
 
     // Apply collisions
     this.applyCollisions(Object.values(this.players));
+
+    // Remove eaten collectable and replace them with new ones
+    this.collectables = this.collectables.filter((c) => c.alive);
+    while (this.collectables.length < NUM_COLLECTABLES) {
+      this.addCollectable();
+    }
 
     // Remove all players that died and send updated state to all players
     Object.entries(this.players).forEach(([id, player]) => {
@@ -77,6 +101,7 @@ export default class Game {
           others: Object.values(this.players)
             .filter((p) => p.id != player.id)
             .map((p) => p.serializeForUpdate()),
+          collectables: this.collectables.map((c) => c.serializeForUpdate()),
         });
       }
     });
@@ -88,6 +113,7 @@ export default class Game {
       if (!p1.alive) {
         continue;
       }
+      // Check for collisions with players
       for (let p2 of players) {
         if (!p2.alive || p1.id === p2.id) {
           continue;
@@ -101,6 +127,16 @@ export default class Game {
             p2.setSize(p2.size + 10);
             p1.setAlive(false);
           }
+        }
+      }
+      // Check for collisions with collectables
+      for (let c of this.collectables) {
+        if (!c.alive) {
+          continue;
+        }
+        if (p1.distanceTo(c) < p1.size + c.size) {
+          c.setAlive(false);
+          p1.setSize(p1.size + 1);
         }
       }
     }

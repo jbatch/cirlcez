@@ -47,5 +47,5 @@ async function main() {
 }
 
 main().catch((error: any) => {
-  logger.error('Fatal error occured: ', error);
+  logger.error({ msg: 'Fatal error occured', err: error, stack: error.stack });
 });

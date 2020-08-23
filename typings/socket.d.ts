@@ -5,6 +5,7 @@ type GameStateMessage = {
   serverFps: number;
   me: PlayerState;
   others: Array<PlayerState>;
+  collectables: Array<CollectableState>;
 };
 type InputMessage = {
   dir: number;

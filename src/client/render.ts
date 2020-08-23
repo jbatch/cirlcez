@@ -2,6 +2,7 @@ import { debounce } from 'throttle-debounce';
 import { getCurrentState } from './game-state';
 import { getDebugParams } from './debug';
 import Constants from '../shared/constants';
+import Collectable from '../server/game/collectable';
 
 const FPS = 60;
 let gameCanvasEl: HTMLCanvasElement;
@@ -24,7 +25,7 @@ window.addEventListener('resize', debounce(40, setCanvasSize));
 function renderAll() {
   const gameState = getCurrentState();
   if (!gameState) return;
-  const { me, others, serverFps } = gameState;
+  const { me, others, collectables, serverFps } = gameState;
 
   ctx.clearRect(0, 0, gameCanvasEl.width, gameCanvasEl.height);
 
@@ -40,7 +41,8 @@ function renderAll() {
   ctx.translate(gameCanvasEl.width / 2 - me.x, gameCanvasEl.height / 2 - me.y);
 
   renderPlayer(me);
-  others.forEach((other: PlayerState) => renderPlayer(other));
+  others.forEach(renderPlayer);
+  collectables.forEach(renderCollectable);
   renderMapEdge();
   ctx.restore();
 
@@ -67,6 +69,15 @@ function renderPlayer(playerState: PlayerState) {
   // ctx.arc(x, y, 20, dir - directionSizeRad / 2, dir + directionSizeRad / 2);
   // // draw directoin stroke
   // ctx.stroke();
+}
+
+function renderCollectable(collectable: CollectableState) {
+  const { x, y, color, size } = collectable;
+  // draw filled circle
+  ctx.beginPath();
+  ctx.fillStyle = color;
+  ctx.arc(x, y, size, 0, Math.PI * 2);
+  ctx.fill();
 }
 
 function setCanvasSize() {

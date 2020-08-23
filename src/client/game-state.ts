@@ -57,6 +57,7 @@ export function getCurrentState(): GameStateMessage {
       t: baseUpdate.t,
       me: interpolateObject(baseUpdate.me, next.me, ratio),
       others: interpolateObjectArray(baseUpdate.others, next.others, ratio),
+      collectables: interpolateObjectArray(baseUpdate.collectables, next.collectables, ratio),
       serverFps: baseUpdate.serverFps,
     };
   }
