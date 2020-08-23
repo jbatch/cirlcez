@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   safeOn('game-state', (gameState) => {
     const { t, me, others } = gameState;
+
     processGameUpdate(gameState);
   });
   safeOn('game-over', () => {
