@@ -2,6 +2,7 @@ import { debounce } from 'throttle-debounce';
 import { getCurrentState } from './game-state';
 import { getDebugParams } from './debug';
 import Constants from '../shared/constants';
+import { getVendetta } from './local-storage';
 
 const FPS = 60;
 let gameCanvasEl: HTMLCanvasElement;
@@ -56,6 +57,7 @@ function renderAll() {
 
 function renderPlayer(playerState: PlayerState) {
   const { x, y } = playerState;
+  const vendettaId = getVendetta();
   // draw filled circle
   ctx.beginPath();
   ctx.fillStyle = playerState.color;
@@ -66,7 +68,8 @@ function renderPlayer(playerState: PlayerState) {
   ctx.fillStyle = '#ffffff';
   ctx.font = '40px sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText(playerState.username, playerState.x, playerState.y - playerState.size - 10);
+  const nameToRender = playerState.id === vendettaId ? `💀${playerState.username}` : playerState.username;
+  ctx.fillText(nameToRender, playerState.x, playerState.y - playerState.size - 10);
 
   // ctx.lineWidth = 4;
   // ctx.arc(x, y, 20, dir - directionSizeRad / 2, dir + directionSizeRad / 2);
