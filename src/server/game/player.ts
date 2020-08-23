@@ -19,7 +19,9 @@ export default class Player extends Entity {
   }
 
   update(dt: number) {
-    super.update(dt);
+    const effectiveSpeed = this.maxSpeed * this.throttle * (1 - (this.size / Constants.MAX_PLAYER_SIZE) * 0.9);
+    this.x += dt * effectiveSpeed * Math.sin(this.direction);
+    this.y -= dt * effectiveSpeed * Math.cos(this.direction);
 
     // Make sure the player stays in bounds
     this.x = Math.max(0 + this.size, Math.min(Constants.MAP_SIZE - this.size, this.x));
@@ -27,7 +29,7 @@ export default class Player extends Entity {
   }
 
   setSize(size: number) {
-    this.size = size;
+    this.size = Math.min(size, Constants.MAX_PLAYER_SIZE);
   }
 
   setThrottle(throttle: number) {
