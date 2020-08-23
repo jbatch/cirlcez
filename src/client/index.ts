@@ -39,14 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setPlayButtonEnabled(false);
   });
   safeOn('game-state', (gameState) => {
-    try {
-      processGameUpdate(gameState);
-    } catch (err) {
-      console.log('CAUGHT', err, gameState);
-    }
+    processGameUpdate(gameState);
   });
   safeOn('game-over', ({ vendetta }) => {
-    console.log('vendetta?', vendetta);
     setVendetta(vendetta.id);
     setTimeout(() => {
       stopPlaying('Game Over!', `You were killed by ${vendetta.username}`);
