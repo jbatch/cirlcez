@@ -61,6 +61,10 @@ function renderPlayer(playerState: PlayerState) {
   // draw filled circle
   ctx.beginPath();
   ctx.fillStyle = playerState.color;
+  if (playerState.size === Constants.MAX_PLAYER_SIZE) {
+    ctx.shadowColor = 'yellow';
+    ctx.shadowBlur = 15;
+  }
   ctx.arc(x, y, playerState.size, 0, Math.PI * 2);
   ctx.fill();
 
@@ -70,11 +74,7 @@ function renderPlayer(playerState: PlayerState) {
   ctx.textAlign = 'center';
   const nameToRender = playerState.id === vendettaId ? `💀${playerState.username}` : playerState.username;
   ctx.fillText(nameToRender, playerState.x, playerState.y - playerState.size - 10);
-
-  // ctx.lineWidth = 4;
-  // ctx.arc(x, y, 20, dir - directionSizeRad / 2, dir + directionSizeRad / 2);
-  // // draw directoin stroke
-  // ctx.stroke();
+  ctx.shadowBlur = 0;
 }
 
 function renderCollectable(collectable: CollectableState) {
