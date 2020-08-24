@@ -37,7 +37,6 @@ const config = {
   },
   plugins: [
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development',
       PUBLIC_URL: 'http://localhost:8000',
       USE_SECURE_CONNECTION: process.env.NODE_ENV === 'production',
       ...dotenvConfig,
