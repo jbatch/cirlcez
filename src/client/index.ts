@@ -5,6 +5,7 @@ import { joinGame } from './network';
 import { processGameUpdate } from './game-state';
 import { getDebugParams } from './debug';
 import { initUi, showModal, setPlayButtonEnabled } from './ui';
+import { setVendetta } from './local-storage';
 
 const socket = initialiseSocket();
 
@@ -41,7 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
     processGameUpdate(gameState);
   });
   safeOn('game-over', ({ vendetta }) => {
-    stopPlaying('Game Over!', `You were killed by ${vendetta.username}`);
-    setPlayButtonEnabled(true);
+    setVendetta(vendetta.id);
+    setTimeout(() => {
+      stopPlaying('Game Over!', `You were killed by ${vendetta.username}`);
+      setPlayButtonEnabled(true);
+    }, 50);
   });
 });

@@ -136,7 +136,7 @@ export default class Game {
           } else if (p2.size >= p1.size) {
             p2.setSize(p2.size + 10);
             p1.setAlive(false);
-            p2.setVendetta({ id: p2.id, username: p2.username });
+            p1.setVendetta({ id: p2.id, username: p2.username });
           }
         }
       }

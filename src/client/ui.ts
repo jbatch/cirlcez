@@ -1,3 +1,5 @@
+import { getPreviousName, setPreviousName } from './local-storage';
+
 let playerNameEl: HTMLInputElement;
 let startGameButtonEl: HTMLButtonElement;
 let modalTitleEl: HTMLDivElement;
@@ -21,7 +23,7 @@ export function initUi(initUiProps: InitUiProps) {
 function addEventListeners(initUiProps: InitUiProps) {
   startGameButtonEl.addEventListener('click', () => {
     const playerName = playerNameEl.value || 'Anon';
-    storeLastName(playerName);
+    setPreviousName(playerName);
     showModal(false);
     setPlayButtonEnabled(false);
     initUiProps.startPlaying(playerName);
@@ -32,7 +34,7 @@ export function showModal(show: boolean, str?: string, str2?: string) {
   if (show) {
     modalTitleEl.innerText = str || 'Circlez io';
     modalSecondaryEl.innerText = str2 || 'Yet another Agar.io clone!';
-    playerNameEl.value = getLastName();
+    playerNameEl.value = getPreviousName();
     startGameModal.classList.remove('hidden');
   } else {
     startGameModal.classList.add('hidden');
@@ -41,12 +43,4 @@ export function showModal(show: boolean, str?: string, str2?: string) {
 
 export function setPlayButtonEnabled(enabled: boolean) {
   startGameButtonEl.disabled = !enabled;
-}
-
-function storeLastName(name: string) {
-  localStorage.setItem('lastName', name);
-}
-
-function getLastName() {
-  return localStorage.getItem('lastName') || '';
 }
