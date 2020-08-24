@@ -7,6 +7,7 @@ const dotenvConfig = dotenv.config().parsed;
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
+console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 const config = {
   context: path.resolve(__dirname, 'src/client/'),
   entry: './index.ts',
