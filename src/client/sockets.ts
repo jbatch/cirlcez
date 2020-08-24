@@ -13,7 +13,9 @@ function getSocket() {
 function initialiseSocket() {
   const useSecureConnection = process.env.NODE_ENV ? Boolean(process.env.NODE_ENV === 'production') : false;
   console.log('Secure?', process.env.NODE_ENV, useSecureConnection);
-  socket = socketIO.connect(`ws://${window.location.host}`, { secure: useSecureConnection });
+  socket = socketIO.connect(`${useSecureConnection ? 'wss' : 'ws'}://${window.location.host}`, {
+    secure: useSecureConnection,
+  });
   socket.on('connect', () => {
     console.log('Connected to server~');
   });
